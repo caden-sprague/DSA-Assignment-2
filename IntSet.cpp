@@ -85,11 +85,11 @@ void IntSet::resize(int new_capacity)
    int* newArr = new int[new_capacity];
    for(int i = 0; i < used; i++)
    {
-      newArr[i] = data[i];    // copy data from to new arr of used size
+      newArr[i] = data[i];
    }
    delete [] data;
-   data = newArr;       // reset data to newArr
-   capacity = new_capacity;         // reset capactiy size
+   data = newArr;      
+   capacity = new_capacity;
 }
 
 IntSet::IntSet(int initial_capacity): capacity(initial_capacity), used(0)
@@ -161,21 +161,15 @@ bool IntSet::contains(int anInt) const
 
 bool IntSet::isSubsetOf(const IntSet& otherIntSet) const
 {
-   if(isEmpty())
+   for(int i = 0; i < used; i++)
    {
-      return true;      // maybe can delete this bit?
-   }
-   else 
-   {
-      for(int i = 0; i < used; i++)
+      if (!otherIntSet.contains(data[i]))
       {
-         if (!otherIntSet.contains(data[i]))
-         {
-            return false;
-         }
+         return false;
       }
-      return true;
    }
+   return true;
+
 }
 
 void IntSet::DumpData(ostream& out) const
