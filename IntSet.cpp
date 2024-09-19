@@ -77,7 +77,7 @@ using namespace std;
 
 void IntSet::resize(int new_capacity)
 {
-   if(new_capacity < used) // if new cap it too small
+   if(new_capacity < used)
    {
       new_capacity = used;
    }
@@ -114,23 +114,25 @@ IntSet::IntSet(const IntSet& src)
 
 IntSet::~IntSet()
 {
-   delete [] data;
+   if(used != 0)
+   {
+      delete [] data;      
+   }
 }
 
 IntSet& IntSet::operator=(const IntSet& rhs)
 {
    if(this != &rhs)
    {
-      int* newData = new int[rhs.capacity];
-      for(int i = 0; i < rhs.used; i++)
-      {
-         newData[i] = rhs.data[i];
-      }
       if(used != 0)
       {
-         delete [] data;
+         delete [] data;      
       }
-      data = newData;
+      data = new int[rhs.capacity];
+      for(int i = 0; i < rhs.used; i++)
+      {
+         data[i] = rhs.data[i];
+      }
       capacity = rhs.capacity;
       used = rhs.used;
    }
@@ -169,7 +171,6 @@ bool IntSet::isSubsetOf(const IntSet& otherIntSet) const
       }
    }
    return true;
-
 }
 
 void IntSet::DumpData(ostream& out) const
