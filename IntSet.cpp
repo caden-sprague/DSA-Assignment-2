@@ -88,7 +88,7 @@ void IntSet::resize(int new_capacity)
       newArr[i] = data[i];
    }
    delete [] data;
-   data = newArr;      
+   data = newArr;
    capacity = new_capacity;
 }
 
@@ -101,12 +101,10 @@ IntSet::IntSet(int initial_capacity): capacity(initial_capacity), used(0)
    data = new int[capacity];
 }
 
-IntSet::IntSet(const IntSet& src)
+IntSet::IntSet(const IntSet& src): capacity(src.capacity), used(src.used)
 {
-   capacity = src.capacity;
-   used = src.used;
    data = new int[capacity];
-   for (int i = 0; i < capacity; ++i)
+   for (int i = 0; i < capacity; i++)
    {
       data[i] = src.data[i];
    }
@@ -116,7 +114,7 @@ IntSet::~IntSet()
 {
    if(used != 0)
    {
-      delete [] data;      
+      delete [] data;
    }
 }
 
@@ -126,7 +124,7 @@ IntSet& IntSet::operator=(const IntSet& rhs)
    {
       if(used != 0)
       {
-         delete [] data;      
+         delete [] data;
       }
       data = new int[rhs.capacity];
       for(int i = 0; i < rhs.used; i++)
@@ -229,7 +227,7 @@ void IntSet::reset()
       delete [] data;
    }
    capacity = DEFAULT_CAPACITY;
-   data = new int[DEFAULT_CAPACITY];  
+   data = new int[DEFAULT_CAPACITY];
    used = 0;
 }
 
@@ -239,8 +237,8 @@ bool IntSet::add(int anInt)
    {
       return false;
    }
-   else 
-   {  
+   else
+   {
       if(used >= capacity)
       {
          resize(int(1.5*capacity)+1);
@@ -257,7 +255,7 @@ bool IntSet::remove(int anInt)
    {
       return false;
    }
-   else 
+   else
    {
       for(int i = 0; i < used; i++)
       {
